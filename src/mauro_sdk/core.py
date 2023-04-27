@@ -1,6 +1,12 @@
 import os
 import requests
 from . import config
+
+# The resources module contains the metadata for the resources.
+# This is a dictionary that maps resource names to resource metadata.
+# The metadata includes the path to the resource and an optional list of required fields for POST.
+# It also includes the HTTP method that should be used for each operation.
+# As a possible improvement, this metadata could be put in a JSON file and passed to the contructor for more flexibility.
 from . import resources
 
 # The APItoSDK class is a generic wrapper, that can be configured for any REST APIs
@@ -10,6 +16,36 @@ from . import resources
 # The constructor takes an optional API key as an argument.
 # If the API key is not provided, it will look for it in the environment variables.
 class APItoSDK:
+    """
+    APItoSDK: A class that provides a simple interface for accessing a RESTful API using an API key. It supports the standard CRUD operations (Create, Read, Update, and Delete) for a set of resources defined by the API. 
+
+    Usage:
+        - Instantiate the APItoSDK class with an API key, which can be passed as an argument or read from the environment variable "API_KEY". The base URL and the list of resources are hardcoded in the config file, but they can be made configurable by passing them as arguments to the constructor or setting them as environment variables.
+        - Use the provided methods to interact with the API:
+            - get_all: returns all resources of a given type.
+            - get_by_id: returns a single resource of a given type by ID.
+            - create: creates a new resource of a given type.
+            - update: updates an existing resource of a given type by ID.
+            - delete: deletes an existing resource of a given type by ID.
+
+    Attributes:
+        - api_key: a string representing the API key used to authenticate requests.
+        - base_url: a string representing the base URL of the API.
+        - resources: a dictionary mapping resource names to resource metadata. The metadata includes the path to the resource and an optional list of required fields for POST.
+
+    Methods:
+        - _send_request: a private helper method that sends an HTTP request to the API.
+        - _build_url: a private helper method that builds the URL for a resource.
+        - _get_required_fields: a private helper method that returns the list of required fields for a resource.
+        - _get_http_methods: a private helper method that returns the list of allowed HTTP methods for a resource.
+        - _check_http_method: a private helper method that checks if a given HTTP method is allowed for a resource.
+        - get_all: a public method that returns all resources of a given type.
+        - get_by_id: a public method that returns a single resource of a given type by ID.
+        - create: a public method that creates a new resource of a given type.
+        - update: a public method that updates an existing resource of a given type by ID.
+        - delete: a public method that deletes an existing resource of a given type by ID.
+
+    """
     def __init__(self, api_key=None):
         if api_key is None:
             api_key = os.environ.get("API_KEY")

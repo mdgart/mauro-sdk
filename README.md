@@ -9,7 +9,12 @@ YOu can find the code for the class in core.py, and the implementation of the Mo
 ```Python >=3.7```
 
 ## Installation
-```pip install mauro-sdk```
+The package is available only in pypi test environment 
+
+``` 
+pip install requests
+pip install --index-url https://test.pypi.org/simple/ --no-deps mauro-sdk
+```
 
 ## Run Tests
 ```
@@ -20,7 +25,21 @@ python -m unittest tests.tests
 ```
 
 ## Usage
-See the movie_sdk.py example for usage, the api resources are defined in resources.py, for API authentication, the API key can be an env variable or be defined in config.py.
+
+Basic usage
+
+```
+from mauro_sdk.movie_sdk import MovieSDK
+movie_sdk = MovieSDK(api_key="test")
+
+movie_sdk.get_all_movies()
+
+```
+
+### Available Methods
+
+
+See the movie_sdk.py example for usage of the APItoSDK Class, the api resources are defined in resources.py, for API authentication, the API key can be an env variable or be defined in config.py.
 
 ## Limitations
 

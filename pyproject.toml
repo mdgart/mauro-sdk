@@ -1,6 +1,6 @@
 [build-system]
-requires = ["hatchling", "requests"]
-build-backend = "mauro-sdk.build"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [project]
 name = "mauro_sdk"
