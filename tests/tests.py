@@ -3,7 +3,7 @@ from src.mauro_sdk.movie_sdk import MovieSDK
 import unittest
 import time
 
-# write tests for MovieSDK app
+# tests for MovieSDK class
 class TestMovieSDK(unittest.TestCase):
 
     def setUp(self):
@@ -81,7 +81,7 @@ class TestMovieSDK(unittest.TestCase):
         self.assertEqual(self.api.delete_quote(int(new_quote["id"]))['id'], new_quote["id"])
 
 
-# wtite tests for APItoSDK app
+# tests for APItoSDK class
 class TestAPItoSDK(unittest.TestCase):
     def setUp(self):
         time.sleep(1) # This is a hack to avoid throttling from mockapi.io
