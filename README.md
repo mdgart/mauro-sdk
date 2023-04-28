@@ -50,9 +50,6 @@ See the movie_sdk.py example for usage of the APItoSDK Class, the api resources 
 - The only authentications supported is Bearer token.
 - "resources" is a python file, it could be a JSON document instead so it can be reused for other SDKs.
 
-NOTE: **for this example, I'm using mockapi.io for tests**, this is the API
-
-https://mockapi.io/projects/64496f86e7eb3378ca499f9f
-
-mockapi has some limitations in the way you defined the endpoints, but it works ok for this exercise. In a real word implementation I would mock the API in python using https://requests-mock.readthedocs.io/en/latest/ or similar
+NOTE: **for this example, I'm using mockapi.io for tests**
+mockapi has some limitations in the way you defined the endpoints, and is unreliable, so if you get errors during tests is probably mockapi.io that failed. In a real word implementation I would mock the API in python using https://requests-mock.readthedocs.io/en/latest/ or similar.
 

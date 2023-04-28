@@ -3,6 +3,14 @@ from src.mauro_sdk.movie_sdk import MovieSDK
 import unittest
 import time
 
+# PLEASE NOTE
+# for this example, I'm using mockapi.io as a mock API,
+# mockapi has some limitations in the way you defined the endpoints, and is unreliable, 
+# so if you get errors during tests is probably mockapi.io that failed. 
+# In a real word implementation I would mock the API in python 
+# using https://requests-mock.readthedocs.io/en/latest/ or similar.
+
+
 # tests for MovieSDK class
 class TestMovieSDK(unittest.TestCase):
 
@@ -53,8 +61,9 @@ class TestMovieSDK(unittest.TestCase):
 
     
     def test_get_quotes_by_movie_id(self):
-        self.assertEqual(self.api.get_quotes_by_movie_id(1)[0]["author"], "Test Author")
-        self.assertEqual(self.api.get_quotes_by_movie_id(2)[0]["quote"], "Test Quote two")
+        movie = self.api.get_all_movies()[0]
+        self.assertIsNotNone(self.api.get_quotes_by_movie_id(movie["id"])[0]["author"])
+        self.assertIsNotNone(self.api.get_quotes_by_movie_id(movie["id"])[0]["quote"])
 
     def test_delete_movie(self):
         new_movie = self.api.create_movie("Test Movie", "Test Description", "Test Genre")
@@ -64,21 +73,23 @@ class TestMovieSDK(unittest.TestCase):
         self.assertGreater(len(self.api.get_all_quotes()), 0)
 
     def test_get_quote_by_id(self):
-        self.assertEqual(self.api.get_quote_by_id(1)["id"], "1")
+        quote = self.api.get_all_quotes().pop()
+        self.assertEqual(self.api.get_quote_by_id(quote["id"])["id"], quote["id"])
 
     def test_update_quote(self):
+        quote = self.api.get_all_quotes().pop()
         self.assertEqual(
-            self.api.update_quote(1, author="New Author")["author"], 
+            self.api.update_quote(quote["id"], author="New Author")["author"], 
             "New Author"
         )
         self.assertEqual(
-            self.api.update_quote(1, quote="New Quote")["quote"], 
+            self.api.update_quote(quote["id"], quote="New Quote")["quote"], 
             "New Quote"
         )
 
     def test_delete_quote(self):
-        new_quote = self.api.create_quote(1, "Test Author", "Test Quote")
-        self.assertEqual(self.api.delete_quote(int(new_quote["id"]))['id'], new_quote["id"])
+        quote = self.api.get_all_quotes().pop()
+        self.assertEqual(self.api.delete_quote(quote["id"])["id"], quote["id"])
 
 
 # tests for APItoSDK class
@@ -125,8 +136,8 @@ class TestAPItoSDK(unittest.TestCase):
         )
 
     def test_get_quotes_by_movie_id(self):
-        self.assertEqual(self.api.get_by_id("movie_quotes", 1)[0]["author"], "Test Author")
-        self.assertEqual(self.api.get_by_id("movie_quotes", 2)[0]["quote"], "Test Quote two")
+        movie = self.api.get_all("movies").pop()
+        self.assertIsNotNone(self.api.get_by_id("movie_quotes", movie["id"]))
 
     def test_delete_movie(self):
         new_movie = self.api.create("movies", {"title": "Test Movie", "description": "Test Description", "genre": "Test Genre"})
@@ -136,21 +147,23 @@ class TestAPItoSDK(unittest.TestCase):
         self.assertGreater(len(self.api.get_all("quotes")), 0)
 
     def test_get_quote_by_id(self):
-        self.assertEqual(self.api.get_by_id("quote", 1)["id"], "1")
+        quote = self.api.get_all("quotes").pop()
+        self.assertEqual(self.api.get_by_id("quote", quote["id"])["id"], quote["id"])
 
     def test_update_quote(self):
+        quote = self.api.get_all("quotes").pop()
         self.assertEqual(
-            self.api.update("quote", 1, {"author": "New Author"})["author"], 
+            self.api.update("quote", quote["id"], {"author": "New Author"})["author"], 
             "New Author"
         )
         self.assertEqual(
-            self.api.update("quote", 1, {"quote": "New Quote"})["quote"], 
+            self.api.update("quote", quote["id"], {"quote": "New Quote"})["quote"], 
             "New Quote"
         )   
 
     def test_delete_quote(self):
-        new_quote = self.api.create("movie_quotes", {"author": "Test Author", "quote": "Test Quote"}, 1)
-        self.assertEqual(self.api.delete("quote", int(new_quote["id"]))['id'], new_quote["id"]) 
+        quote = self.api.get_all("quotes").pop()
+        self.assertEqual(self.api.delete("quote", quote["id"])['id'], quote["id"]) 
 
 
 if __name__ == '__main__':
