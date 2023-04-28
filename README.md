@@ -1,5 +1,5 @@
 # MovieSDK documentation
-## A experimental generic API to SDK class for Python with an implementation for Movies API
+## An experimental generic API to SDK class for Python with an implementation for Movies API
 
 This package contains two classes:
 The APItoSDK class provides a way to quickly create SKD based on a configuration file, the code is in core.py.
@@ -14,7 +14,7 @@ NOTE: The package is available only in pypi test environment
 
 ``` 
 pip install requests
-pip install --index-url https://test.pypi.org/simple/ --no-deps mauro-sdk
+pip install -i https://test.pypi.org/simple/ mauro-sdk
 ```
 
 ## Run Tests
