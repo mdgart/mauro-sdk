@@ -2,19 +2,15 @@ import os
 import requests
 from . import config
 
-# The resources module contains the metadata for the resources.
-# This is a dictionary that maps resource names to resource metadata.
-# The metadata includes the path to the resource and an optional list of required fields for POST.
-# It also includes the HTTP method that should be used for each operation.
-# As a possible improvement, this metadata could be put in a JSON file and passed to the contructor for more flexibility.
-from . import resources
-
+##########################################################################################
 # The APItoSDK class is a generic wrapper, that can be configured for any REST APIs
 # using the data in resources.py and config.py
 #
 # It provides methods for interacting with the API.
 # The constructor takes an optional API key as an argument.
 # If the API key is not provided, it will look for it in the environment variables.
+##########################################################################################
+
 class APItoSDK:
     """
     APItoSDK: A class that provides a simple interface for accessing a RESTful API using an API key. It supports the standard CRUD operations (Create, Read, Update, and Delete) for a set of resources defined by the API. 
@@ -46,7 +42,7 @@ class APItoSDK:
         - delete: a public method that deletes an existing resource of a given type by ID.
 
     """
-    def __init__(self, api_key=None):
+    def __init__(self, api_key=None, resources=None):
         if api_key is None:
             api_key = os.environ.get("API_KEY")
         if not api_key:

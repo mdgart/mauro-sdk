@@ -1,14 +1,20 @@
 from src.mauro_sdk.core import APItoSDK
 from src.mauro_sdk.movie_sdk import MovieSDK
+# The resources module contains the metadata for the resources.
+# This is a dictionary that maps resource names to resource metadata.
+# The metadata includes the path to the resource and an optional list of required fields for POST.
+# It also includes the HTTP method that should be used for each operation.
+# As a possible improvement, this metadata could be put in a JSON file and passed to the contructor for more flexibility.
+from src.mauro_sdk import resources
 import unittest
 import time
 
 # PLEASE NOTE
-# for this example, I'm using mockapi.io as a mock API,
+# for this example, for sempliciry I'm using mockapi.io as a mock API,
 # mockapi has some limitations in the way you defined the endpoints, and is unreliable, 
 # so if you get errors during tests is probably mockapi.io that failed. 
 # In a real word implementation I would mock the API in python 
-# using https://requests-mock.readthedocs.io/en/latest/ or similar.
+# using https://requests-mock.readthedocs.io or similar.
 
 
 # tests for MovieSDK class
@@ -16,7 +22,7 @@ class TestMovieSDK(unittest.TestCase):
 
     def setUp(self):
         time.sleep(1) # This is a hack to avoid throttling from mockapi.io
-        self.api = MovieSDK("some_api_key")  # mockapi doens't require an api key
+        self.api = MovieSDK("some_api_key", resources)  # mockapi doens't require an api key
 
     def test_create_movie(self):
         self.assertEqual(
@@ -96,7 +102,7 @@ class TestMovieSDK(unittest.TestCase):
 class TestAPItoSDK(unittest.TestCase):
     def setUp(self):
         time.sleep(1) # This is a hack to avoid throttling from mockapi.io
-        self.api = APItoSDK("some_api_key")  # mockapi doens't require an api key
+        self.api = APItoSDK("some_api_key", resources)  # mockapi doens't require an api key
 
     def test_create_movie(self):
         self.assertEqual(

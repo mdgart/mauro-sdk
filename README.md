@@ -1,15 +1,16 @@
 # MovieSDK documentation
 ## A experimental generic API to SDK class for Python with an implementation for Movies API
 
-The APItoSDK class provides a way to quickly create SKD based on a configuration file.
-YOu can find the code for the class in core.py, and the implementation of the MoveSQK is in movie_sdk.py and resources.py.
+This package contains two classes:
+The APItoSDK class provides a way to quickly create SKD based on a configuration file, the code is in core.py.
+MoveSQK in an implementation for the movie API and lives is movie_sdk.
 
 
 ## Requirements
 ```Python >=3.7```
 
 ## Installation
-The package is available only in pypi test environment 
+NOTE: The package is available only in pypi test environment 
 
 ``` 
 pip install requests
@@ -18,7 +19,7 @@ pip install --index-url https://test.pypi.org/simple/ --no-deps mauro-sdk
 
 ## Run Tests
 ```
-git clone https://github.com/
+git clone git@github.com:mdgart/mauro-sdk.git
 cd mauro-sdk
 pipenv install
 python -m unittest tests.tests
@@ -30,7 +31,8 @@ Basic usage
 
 ```
 from mauro_sdk.movie_sdk import MovieSDK
-movie_sdk = MovieSDK(api_key="test")
+from mauro_sdk import resources
+movie_sdk = MovieSDK("test", resources)
 
 movie_sdk.get_all_movies()
 
@@ -43,9 +45,9 @@ See the movie_sdk.py example for usage of the APItoSDK Class, the api resources 
 
 ## Limitations
 
-- The resource paths that can be added in resources.py support just one dynamic value {id}, a possible improvement would be to use a dictionary for resource paths that requires multiple dynamic values.
-- There are no validations for the input data at the SDK level, if the validation is implemented at API level, it's probably acceptable, but it would be a nice addition.
-- The only HTTP methods supported are GET, POST, PUT, DELETE
+- The resource paths that can be added in resources.py support just one dynamic value {id}, a possible improvement would be to use a dictionary for resource paths that allows for multiple dynamic values.
+- There are no validations for the input data at the SDK level. The validation is implemented at API level, but it would be a nice addition to have custom validation at SDK level.
+- The HTTP methods properly handled are GET, POST, PUT, DELETE, but the APItoSDK class can be extended to add additional methods.
 - Batch processing is not supported
 - The only authentications supported is Bearer token.
 - "resources" is a python file, it could be a JSON document instead so it can be reused for other SDKs.

@@ -14,7 +14,7 @@ class MovieSDK(APItoSDK):
 
     Constructor:
     -----------
-    __init__(self, api_key: str) -> None:
+    __init__(self, api_key: str, resources: module) -> None:
         Initializes the SDK with the given api_key.
 
     Methods:
